@@ -1,0 +1,174 @@
+#include <iostream>
+using namespace std;
+struct node {int x; node *nextptr;};
+struct nodeb {int y;nodeb *nextptrb;};
+void insertatback_a(int);
+void insertatback_b(int);
+int removefromfront_a();
+int removefromfront_b();
+int top = 0;
+int topb = 0;
+int integer,element,elem;
+int temp = -1;
+int val,val1;
+int store;
+//queue A
+node *pointer;
+node *root;
+node *tail;
+//node *currentptr;
+node *temptr;
+//queue B
+nodeb *pointerb;
+nodeb *rootb;
+nodeb *tailb;
+//nodeb *currentptrb;
+nodeb *temptrb;
+
+int main()
+{
+statement:
+//this is the goto statement label.
+    while(temp!=0)
+	{
+        cout<<"Enter 1 to push an element onto the queue"<<endl;
+		cout<<"Enter 2 to pop an element off the queue"<<endl;
+		cout<<"Enter 0 to exit"<<endl;
+		cin>>temp;
+
+    switch(temp)
+	{
+        case 1:
+		{
+            //push implementation, tests for when the stack is full.
+            cout<<"Please enter the value that needs to be added to the queue"<<endl;
+			cin>>integer;
+            insertatback_a(integer);
+			break;
+			}
+			case 2:
+			{  //pop implementation, tests for when the stack is empty.
+			if(top==0)
+			{
+			if(topb==0)
+			{
+			cout<<"The queue is empty "<<endl;
+			goto statement;
+			}
+			}
+            if(topb==0)
+			{
+			while(top!=1)
+			{
+			store = removefromfront_a();
+			insertatback_b(store);
+			}
+			removefromfront_a();
+			goto statement;
+			}
+            if(top==0)
+			{
+			while(topb!=1)
+			{
+			store = removefromfront_b();
+			insertatback_a(store);
+			}
+			removefromfront_b();
+			goto statement;
+			}
+            if(top!=0)
+			{
+			if(topb!=0)
+			{
+			while(top!=1)
+			{
+			store = removefromfront_a();
+			insertatback_b(store);
+			}
+			removefromfront_a();
+			}
+			goto statement;
+			}
+			}
+        break;
+		}
+		}
+		return 0;
+		}
+
+void insertatback_a(int element)
+{
+pointer = new node;
+pointer->nextptr = 0;
+pointer->x = element;
+    if(top ==0)
+	{
+	root = pointer;
+	tail = pointer;
+	tail->nextptr = root;
+	}
+	else
+	{
+	tail->nextptr = pointer;
+	tail = pointer;
+	pointer->nextptr = root;
+	}
+	top++;
+	cout<<"The number of elements on the queue A is "<<top<<endl;
+	}
+void insertatback_b(int elem)
+{
+	pointerb = new nodeb;
+	pointerb->nextptrb = 0;
+	pointerb->y = elem;
+    if(topb ==0)
+	{
+	rootb = pointerb;
+	tailb = pointerb;
+	tailb->nextptrb = rootb;
+	}
+	else
+	{
+	tailb->nextptrb = pointerb;
+	tailb = pointerb;
+	pointerb->nextptrb = rootb;
+	}
+	topb++;
+	cout<<"The number of elements on the queue b is "<<topb<<endl;
+	}
+
+int removefromfront_a()
+{
+if(top ==0)
+{
+cout<<"There are no elements to be removed/popped from queue A"<<endl;
+}
+else
+{
+temptr = root;
+root = temptr->nextptr;
+val = temptr->x;
+cout<<"The value removed/popped is "<<temptr->x<<endl;
+delete temptr;
+top--;
+}
+return val;
+}
+
+int removefromfront_b()
+{
+if(topb ==0)
+{
+cout<<"There are no elements to be removed/popped from queue B "<<endl;
+}
+else
+{
+temptrb = rootb;
+rootb = temptrb->nextptrb;
+val1 = temptrb->y;
+cout<<"The value removed/popped is "<<temptrb->y<<endl;
+delete temptrb;
+topb--;
+}
+return val1;
+}
